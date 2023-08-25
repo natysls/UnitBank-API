@@ -1,0 +1,13 @@
+package com.uece.banking.uecebanking;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class UecebankingApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(UecebankingApplication.class, args);
+	}
+
+}
