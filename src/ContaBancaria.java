@@ -1,25 +1,22 @@
 
 public class ContaBancaria extends Conta {
 	
-	protected ContaBancaria(int numeroDaConta, double saldoInicial) {
-		super(numeroDaConta, saldoInicial);
+	protected ContaBancaria(Usuario usuario, int numeroDaConta, double saldoInicial) {
+		super(usuario, numeroDaConta, saldoInicial);
 	}
 
-//	@Override
-//	protected void criarContaBancaria(int numeroDaConta, double saldoInicial) {
-//		super.criarContaBancaria(numeroDaConta, saldoInicial);
-//	}
-
+	@Override
+	protected void exibirUsuario() {
+		super.exibirUsuario();
+	}
 	@Override
 	protected double depositarValor(double deposito) {
 		return super.depositarValor(deposito);
 	}
-	
 	@Override
 	protected double sacarValor(double saque) {
 		return super.sacarValor(saque);
 	}
-	
 	@Override
 	protected void imprimirSaldo() {
 		super.imprimirSaldo();

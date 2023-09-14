@@ -1,9 +1,14 @@
+import java.util.Random;
 
 public class Main {
 
 	public static void main(String[] args) {
-		ContaBancaria contaBancaria = new ContaBancaria(8765873, 8000.00);
-		
+		Usuario usuario = new Usuario("Natalia", "61865489379", "4040");
+		ContaBancaria contaBancaria = new ContaBancaria(usuario, 428922, 8000.00);
+
+		System.out.println("Usuário: ");
+		contaBancaria.exibirUsuario();
+
 		System.out.println("Antes de tudo: ");
 		contaBancaria.imprimirSaldo();
 		
