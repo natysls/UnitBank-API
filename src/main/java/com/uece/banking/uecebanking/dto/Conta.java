@@ -4,14 +4,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 
 @Entity
-@Table(name="conta")
 public class Conta {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String numeroConta;
     private String nomeTitular;
     private double saldo;
@@ -28,11 +28,11 @@ public class Conta {
     public void setNumeroConta(String numeroConta) {
         this.numeroConta = numeroConta;
     }
-    public String getNomeTitular() {
+    public String getNome() {
         return nomeTitular;
     }
-    public void setNomeTitular(String nomeTitular) {
-        this.nomeTitular = nomeTitular;
+    public void setNome(String nome) {
+        this.nomeTitular = nome;
     }
     public double getSaldo() {
         return saldo;
@@ -40,7 +40,7 @@ public class Conta {
     public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
+
     
-    // Getters e setters
     
 }
