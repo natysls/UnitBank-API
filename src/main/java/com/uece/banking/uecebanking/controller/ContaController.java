@@ -1,7 +1,6 @@
 package com.uece.banking.uecebanking.controller;
 
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,37 +46,74 @@ public class ContaController {
         return contaRepository.findByNumeroConta(numeroConta);
     }
 
-/* 
-    @PostMapping("/transferir")
-    public ResponseEntity<String> transferir(@RequestParam Long origemId, @RequestParam Long destinoId, @RequestParam double valor) {
-        // Lógica de transferência de dinheiro aqui
-        return ResponseEntity.ok("Transferência realizada com sucesso.");
-    }*/
-
     @PostMapping("/transferir/{contaOrigem}/{contaDestino}/{valor}")
     public ResponseEntity<String> transferir(@PathVariable String contaOrigem, @PathVariable String contaDestino, @PathVariable double valor) {
-    // Busca as contas no banco de dados
-    Conta origem = contaRepository.findByNumeroConta(contaOrigem);
-    Conta destino = contaRepository.findByNumeroConta(contaDestino);
+        // Busca as contas no banco de dados
+        Conta origem = contaRepository.findByNumeroConta(contaOrigem);
+        Conta destino = contaRepository.findByNumeroConta(contaDestino);
 
-    // Verifica se as contas existem
-    if (origem != null && destino != null) {
-        // Verifica se há saldo suficiente na conta de origem
-        if (origem.getSaldo() < valor) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Saldo insuficiente na conta de origem.");
+        // Verifica se as contas existem
+        if (origem != null && destino != null) {
+            // Verifica se há saldo suficiente na conta de origem
+            if (origem.getSaldo() < valor) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Saldo insuficiente na conta de origem.");
+            }
+
+            // Atualiza os saldos
+            origem.debitar(valor);
+            destino.creditar(valor);
+
+            // Salva as atualizações no banco de dados
+            contaRepository.save(origem);
+            contaRepository.save(destino);
+
+            return ResponseEntity.ok("Transferência realizada com sucesso.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Conta de origem ou destino não encontrada.");
+        }
+    }
+
+
+     @PostMapping("/depositar/{numeroConta}/{valor}")
+    public ResponseEntity<String> realizarDeposito(@PathVariable String numeroConta, @PathVariable double valor) {
+        // Busca a conta com o número especificado
+        Conta conta = contaRepository.findByNumeroConta(numeroConta);
+
+        // Verifica se a conta existe
+        if (conta == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Conta não encontrada.");
         }
 
-        // Atualiza os saldos
-        origem.debitar(valor);
-        destino.creditar(valor);
+        // Realiza o depósito
+        conta.creditar(valor);
 
-        // Salva as atualizações no banco de dados
-        contaRepository.save(origem);
-        contaRepository.save(destino);
+        // Salva a conta atualizada no banco de dados
+        contaRepository.save(conta);
 
-        return ResponseEntity.ok("Transferência realizada com sucesso.");
-    } else {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Conta de origem ou destino não encontrada.");
+        return ResponseEntity.ok("Depósito realizado com sucesso. Novo saldo: " + conta.getSaldo());
     }
-}
+
+    @PostMapping("/sacar/{numeroConta}/{valor}")
+    public ResponseEntity<String> realizarSaque(@PathVariable String numeroConta, @PathVariable double valor) {
+        // Busca a conta com o número especificado
+        Conta conta = contaRepository.findByNumeroConta(numeroConta);
+
+        // Verifica se a conta existe
+        if (conta == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Conta não encontrada.");
+        }
+
+        // Verifica se há saldo suficiente para o saque
+        if (conta.getSaldo() < valor) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Saldo insuficiente para o saque.");
+        }
+
+        // Realiza o saque
+        conta.debitar(valor);
+
+        // Salva a conta atualizada no banco de dados
+        contaRepository.save(conta);
+
+        return ResponseEntity.ok("Saque realizado com sucesso. Novo saldo: " + conta.getSaldo());
+    }
 }
