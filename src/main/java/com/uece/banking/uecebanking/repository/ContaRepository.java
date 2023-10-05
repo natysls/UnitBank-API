@@ -11,4 +11,5 @@ import com.uece.banking.uecebanking.dto.Conta;
 public interface ContaRepository extends JpaRepository<Conta, Long> {
     
     // Métodos personalizados, se necessário
+    Conta findByNumeroConta(String numeroConta);
 }

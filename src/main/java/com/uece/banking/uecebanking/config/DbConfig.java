@@ -13,7 +13,7 @@ public class DbConfig {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.sqlite.JDBC");
-        dataSource.setUrl("jdbc:sqlite:/Users/davifontenele/ProjetosSpringboot/UnitBank-Api/bank_data");
+        dataSource.setUrl("jdbc:sqlite:C:/Users/davif/Documents/unitbank/UnitBank-API/bank_data");
         return dataSource;
     }
 }
