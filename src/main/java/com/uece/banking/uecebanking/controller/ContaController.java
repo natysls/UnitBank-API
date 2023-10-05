@@ -21,6 +21,7 @@ public class ContaController {
 
     private final ContaRepository contaRepository;
 
+    //lista todas as contas cadastradas no banco
     @GetMapping("/listar")
     public List<Conta> listarContas() {
         return contaRepository.findAll();
@@ -31,21 +32,25 @@ public class ContaController {
         this.contaRepository = contaRepository;
     }
 
+    //cria uma nova conta passando um body json com nome, numero da conta e o saldo inicial
     @PostMapping()
     public Conta criarConta(@RequestBody Conta conta) {
         return contaRepository.save(conta);
     }
 
+    //retorna dados da conta passando o id
     @GetMapping("/{id}")
-    public Conta consultarSaldo(@PathVariable Long id) {
+    public Conta consultarPorId(@PathVariable Long id) {
         return contaRepository.findById(id).orElse(null);
     }
 
+    //retorna dados passando o numero da conta
     @GetMapping("/numero/{numeroConta}")
     public Conta consultarPorNumero(@PathVariable String numeroConta) {
         return contaRepository.findByNumeroConta(numeroConta);
     }
 
+    //transfere valores entre contas
     @PostMapping("/transferir/{contaOrigem}/{contaDestino}/{valor}")
     public ResponseEntity<String> transferir(@PathVariable String contaOrigem, @PathVariable String contaDestino, @PathVariable double valor) {
         // Busca as contas no banco de dados
@@ -74,6 +79,7 @@ public class ContaController {
     }
 
 
+    //deposita valor em determinada conta
      @PostMapping("/depositar/{numeroConta}/{valor}")
     public ResponseEntity<String> realizarDeposito(@PathVariable String numeroConta, @PathVariable double valor) {
         // Busca a conta com o número especificado
@@ -93,6 +99,7 @@ public class ContaController {
         return ResponseEntity.ok("Depósito realizado com sucesso. Novo saldo: " + conta.getSaldo());
     }
 
+    //efetua saque de determinada conta
     @PostMapping("/sacar/{numeroConta}/{valor}")
     public ResponseEntity<String> realizarSaque(@PathVariable String numeroConta, @PathVariable double valor) {
         // Busca a conta com o número especificado
