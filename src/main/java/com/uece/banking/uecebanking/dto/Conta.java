@@ -1,5 +1,9 @@
 package com.uece.banking.uecebanking.dto;
 
+import java.util.UUID;
+
+import org.hibernate.annotations.GenericGenerator;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -7,19 +11,28 @@ import jakarta.persistence.Id;
 
 @Entity
 public class Conta {
-
+    
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    private Integer id;
     private String numeroConta;
     private String nomeTitular;
     private double saldo;
 
-    public Long getId() {
+    public Conta(){}
+
+    public Conta(Integer idConta, String nome, String numero, double saldoConta){
+        id = idConta;
+        nomeTitular = nome;
+        numeroConta = numero;
+        saldo = saldoConta;
+
+    }
+
+
+    public Integer getId() {
         return id;
     }
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
     public String getNumeroConta() {
