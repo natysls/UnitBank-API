@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Config of project ###
+src/main/resources/application.properties
+src/main/java/com/uece/banking/uecebanking/config/DbConfig.java
