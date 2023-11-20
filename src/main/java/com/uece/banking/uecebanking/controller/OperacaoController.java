@@ -42,7 +42,7 @@ public class OperacaoController {
             contaRepository.save(origem);
             contaRepository.save(destino);
 
-            return ResponseEntity.ok("Transferência realizada com sucesso.");
+            return ResponseEntity.ok("" + origem.getSaldo());
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Conta de origem ou destino não encontrada.");
         }
@@ -66,7 +66,7 @@ public class OperacaoController {
         // Salva a conta atualizada no banco de dados
         contaRepository.save(conta);
 
-        return ResponseEntity.ok("Depósito realizado com sucesso. Novo saldo: " + conta.getSaldo());
+        return ResponseEntity.ok("" + conta.getSaldo());
     }
 
     //efetua saque de determinada conta
@@ -91,7 +91,7 @@ public class OperacaoController {
         // Salva a conta atualizada no banco de dados
         contaRepository.save(conta);
 
-        return ResponseEntity.ok("Saque realizado com sucesso. Novo saldo: " + conta.getSaldo());
+        return ResponseEntity.ok("" + conta.getSaldo());
     }
 
 }
