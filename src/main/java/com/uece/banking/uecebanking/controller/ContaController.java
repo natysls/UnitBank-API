@@ -2,7 +2,6 @@ package com.uece.banking.uecebanking.controller;
 
 import java.util.List;
 import java.util.Random;
-import java.util.UUID;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,14 +28,14 @@ public class ContaController {
         return contaRepository.findAll();
     }
 
-
+    Random random = new Random();
     //cria uma nova conta passando um body json com nome, numero da conta e o saldo inicial
     @PostMapping("/{nome}/{numero}/{saldo}")
     public Conta criarConta(@PathVariable String nome, 
     @PathVariable String numero, @PathVariable double saldo) {
 
         Conta conta = new Conta();
-        Random random = new Random();
+        
         Integer id = random.nextInt(100000);
         conta.setId(id);
         conta.setNome(nome);
